@@ -6,6 +6,7 @@ import UsuariosPage from './pages/UsuariosPage';
 import SucursalesPage from './pages/SucursalesPage';
 import ResenasPage from './pages/ResenasPage';
 import AnaliticasPage from './pages/AnaliticasPage';
+import OrdenesPage from './pages/OrdenesPage';
 
 
 const theme = createTheme({
@@ -32,6 +33,7 @@ function App() {
 
               <Route path="/analiticas" element={<AnaliticasPage />} />
               {/* Puedes añadir más rutas aquí */}
+              <Route path="/ordenes" element={<OrdenesPage />} />
             </Routes>
           </Box>
         </Box>
