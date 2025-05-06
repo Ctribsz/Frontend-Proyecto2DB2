@@ -1,29 +1,31 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Container from '@mui/material/Container';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Sidebar from './components/Sidebar';
-import { useUsuarios } from './hooks/useUsuarios'; // nuevo hook
-import { Usuario } from './types';
+import UsuariosPage from './pages/UsuariosPage';
+
 
 const theme = createTheme({
   palette: {
-    primary: {
-      main: '#60a5fa', // Azul claro
-    },
-    secondary: {
-      main: '#fb923c', // Naranja
-    },
+    primary: { main: '#60a5fa' }, // Azul claro
+    secondary: { main: '#fb923c' }, // Naranja
   },
 });
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex' }}>
-        <Sidebar />
-        
-      </Box>
+      <Router>
+        <Box sx={{ display: 'flex' }}>
+          <Sidebar />
+          <Box sx={{ flexGrow: 1, p: 3 }}>
+            <Routes>
+              <Route path="/usuarios" element={<UsuariosPage />} />
+              {/* Puedes añadir más rutas aquí */}
+            </Routes>
+          </Box>
+        </Box>
+      </Router>
     </ThemeProvider>
   );
 }

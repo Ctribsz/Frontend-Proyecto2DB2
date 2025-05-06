@@ -1,24 +1,25 @@
-import * as React from "react"
-import { styled, type Theme, type CSSObject } from "@mui/material/styles"
-import Box from "@mui/material/Box"
-import MuiDrawer from "@mui/material/Drawer"
-import List from "@mui/material/List"
-import Typography from "@mui/material/Typography"
-import Divider from "@mui/material/Divider"
-import ListItem from "@mui/material/ListItem"
-import ListItemButton from "@mui/material/ListItemButton"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import ListItemText from "@mui/material/ListItemText"
-import DashboardIcon from "@mui/icons-material/Dashboard"
-import PeopleIcon from "@mui/icons-material/People"
-import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu"
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
-import StarIcon from "@mui/icons-material/Star"
-import StorefrontIcon from "@mui/icons-material/Storefront"
+import * as React from "react";
+import { styled, type Theme, type CSSObject } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import MuiDrawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import PeopleIcon from "@mui/icons-material/People";
+import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import StarIcon from "@mui/icons-material/Star";
+import StorefrontIcon from "@mui/icons-material/Storefront";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import quetzalLogo from "../assets/quetzal-logo.png" 
+import quetzalLogo from "../assets/quetzal-logo.png";
 
-const drawerWidth = 260
+const drawerWidth = 260;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -27,9 +28,9 @@ const openedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
-  backgroundColor: "#1e293b", 
+  backgroundColor: "#1e293b",
   color: "white",
-})
+});
 
 const closedMixin = (theme: Theme): CSSObject => ({
   transition: theme.transitions.create("width", {
@@ -41,9 +42,9 @@ const closedMixin = (theme: Theme): CSSObject => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
-  backgroundColor: "#1e293b", 
+  backgroundColor: "#1e293b",
   color: "white",
-})
+});
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -60,85 +61,78 @@ const Drawer = styled(MuiDrawer, {
     ...closedMixin(theme),
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
-}))
-
+}));
 
 const menuItems = [
-  { text: "Usuarios", icon:<PeopleIcon /> ,  path: "/" },
-  { text: "Ordenes", icon: <DashboardIcon />, path: "/users" },
-  { text: "Reseñas", icon: <StarIcon /> , path: "/restaurants" },
-  { text: "Menu", icon: <RestaurantMenuIcon />, path: "/menu-items" },
-  { text: "Sucursales", icon: <StorefrontIcon />, path: "/reviews" },
-]
+  { text: "Usuarios", icon: <PeopleIcon />, path: "/usuarios" },
+  { text: "Órdenes", icon: <ShoppingCartIcon />, path: "/ordenes" },
+  { text: "Reseñas", icon: <StarIcon />, path: "/resenas" },
+  { text: "Menú", icon: <RestaurantMenuIcon />, path: "/menu" },
+  { text: "Sucursales", icon: <StorefrontIcon />, path: "/sucursales" },
+];
 
 export default function Sidebar() {
-  const [selectedIndex, setSelectedIndex] = React.useState(0)
-
-  const handleNavigation = (path: string, index: number) => {
-    setSelectedIndex(index)
-   
-  }
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <Drawer variant="permanent" open={true}>
       <Box sx={{ p: 3, textAlign: "center" }}>
-        {/* Logo y título del restaurante */}
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", mb: 1 }}>
           <img
-            src={quetzalLogo || "/placeholder.svg"}
+            src={quetzalLogo}
             alt="Quetzal Restaurant Logo"
-            style={{
-              height: "60px",
-              marginRight: "10px",
-            }}
+            style={{ height: "60px", marginRight: "10px" }}
           />
         </Box>
         <Typography variant="h6" noWrap component="div" sx={{ fontWeight: "bold" }}>
           Quetzal Restaurant
         </Typography>
       </Box>
+
       <Divider sx={{ backgroundColor: "rgba(255,255,255,0.1)" }} />
+
       <List>
-        {menuItems.map((item, index) => (
-          <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                px: 2.5,
-                backgroundColor: selectedIndex === index ? "#60a5fa" : "transparent", // Light blue when selected
-                "&:hover": {
-                  backgroundColor: "#fb923c", // Orange on hover
-                },
-                my: 0.5,
-                mx: 1,
-                borderRadius: "8px",
-              }}
-              onClick={() => handleNavigation(item.path, index)}
-            >
-              <ListItemIcon
+        {menuItems.map((item, index) => {
+          const isSelected = location.pathname === item.path;
+
+          return (
+            <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: 3,
-                  justifyContent: "center",
-                  color: selectedIndex === index ? "white" : "#93c5fd", // Light blue icon
+                  minHeight: 48,
+                  px: 2.5,
+                  backgroundColor: isSelected ? "#60a5fa" : "transparent",
+                  "&:hover": { backgroundColor: "#fb923c" },
+                  my: 0.5,
+                  mx: 1,
+                  borderRadius: "8px",
                 }}
+                onClick={() => navigate(item.path)}
               >
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText
-                primary={item.text}
-                sx={{
-                  "& .MuiTypography-root": {
-                    fontWeight: selectedIndex === index ? "bold" : "normal",
-                  },
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: 3,
+                    justifyContent: "center",
+                    color: isSelected ? "white" : "#93c5fd",
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.text}
+                  sx={{
+                    "& .MuiTypography-root": {
+                      fontWeight: isSelected ? "bold" : "normal",
+                    },
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
     </Drawer>
-  )
+  );
 }
-
-
