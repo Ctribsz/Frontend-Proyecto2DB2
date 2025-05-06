@@ -18,4 +18,26 @@ export interface Direccion {
     activo: boolean
     fechaRegistro: string
   }
+
+  export interface Platillo {
+    itemId: string
+    nombre: string
+    cantidad: number
+    precio_unitario: number
+    [key: string]: any
+  }
   
+  export interface Orden {
+    _id: string
+    sucursalId: string
+    usuarioId: string
+    platillos: Platillo[]
+    subtotal: number
+    iva: number
+    total: number
+    estado: string
+    metodo_pago: string
+    fecha: string
+    origen: string
+    calificacion: number | null
+  }

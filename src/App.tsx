@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Sidebar from './components/Sidebar';
 import UsuariosPage from './pages/UsuariosPage';
+import OrdenesPage from './pages/OrdenesPage';
 
 
 const theme = createTheme({
@@ -21,7 +22,7 @@ function App() {
           <Box sx={{ flexGrow: 1, p: 3 }}>
             <Routes>
               <Route path="/usuarios" element={<UsuariosPage />} />
-              {/* Puedes añadir más rutas aquí */}
+              <Route path="/ordenes" element={<OrdenesPage />} />
             </Routes>
           </Box>
         </Box>
