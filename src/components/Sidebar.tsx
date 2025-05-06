@@ -16,6 +16,8 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import StarIcon from "@mui/icons-material/Star";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import { useNavigate, useLocation } from "react-router-dom";
+import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
+
 
 import quetzalLogo from "../assets/quetzal-logo.png";
 
@@ -69,6 +71,8 @@ const menuItems = [
   { text: "Reseñas", icon: <StarIcon />, path: "/resenas" },
   { text: "Menú", icon: <RestaurantMenuIcon />, path: "/menu" },
   { text: "Sucursales", icon: <StorefrontIcon />, path: "/sucursales" },
+
+  { text: "Graficas", icon: <InsertChartOutlinedIcon />, path: "/analiticas" },
 ];
 
 export default function Sidebar() {
