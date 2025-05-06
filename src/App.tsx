@@ -1,23 +1,29 @@
-import Header from './components/Header'
-import Container from '@mui/material/Container'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+import Container from "@mui/material/Container"
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
+import Sidebar from "./components/Sidebar"
+
+// Create a theme with light blue and orange colors
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#60a5fa", // Light blue
+    },
+    secondary: {
+      main: "#fb923c", // Orange
+    },
+  },
+})
 
 function App() {
   return (
-    <>
-      <Header />
-      <Container>
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h4" gutterBottom>
-            ¡Hola con TS + Material UI!
-          </Typography>
-          <Typography>
-            Tu proyecto corre con Vite, React, TypeScript y Material UI.
-          </Typography>
-        </Box>
-      </Container>
-    </>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ display: "flex" }}>
+        <Sidebar />
+        
+      </Box>
+    </ThemeProvider>
   )
 }
 
