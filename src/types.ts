@@ -19,6 +19,7 @@ export interface Direccion {
     fechaRegistro: string
   }
 
+<<<<<<< HEAD
   export interface Platillo {
     itemId: string
     nombre: string
@@ -41,3 +42,17 @@ export interface Direccion {
     origen: string
     calificacion: number | null
   }
+=======
+  export interface Menu {
+    _id: string;
+    nombre: string;
+    descripcion: string;
+    precio: number;
+    categoria: string;
+    disponible: boolean;
+    ingredientes: string[];
+    vegana: boolean;
+    fechaCreacion: string; // Puedes usar Date si prefieres manipularla como un objeto Date
+  }
+  
+>>>>>>> menu
