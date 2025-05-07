@@ -30,6 +30,7 @@ export default function MenuPage() {
     esVegano: false,
   });
   const [snackbar, setSnackbar] = useState({ open: false, message: '' });
+  const [sortedMenus, setSortedMenus] = useState<Menu[] | null>(null);
 
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -43,7 +44,6 @@ export default function MenuPage() {
   const handleChange = (_: any, value: number) => setPage(value);
 
   const startIndex = (page - 1) * MENUS_PER_PAGE;
-  const paginatedMenus = menus.slice(startIndex, startIndex + MENUS_PER_PAGE);
 
   const showMessage = (msg: string) => setSnackbar({ open: true, message: msg });
 
@@ -80,7 +80,9 @@ export default function MenuPage() {
     }
     setIsEditOpen(false);
   };
-
+  const currentMenus = sortedMenus || menus;
+  const paginatedMenus = currentMenus.slice(startIndex, startIndex + MENUS_PER_PAGE);
+  
   const handleDelete = async () => {
     if (!deleteMenuId) return;
     try {
@@ -96,7 +98,7 @@ export default function MenuPage() {
   
   const handleCreate = async () => {
     try {
-      const { _id, ...dataWithoutId } = editData; // ❌ quitamos _id
+      const { _id, ...dataWithoutId } = editData; 
       await axios.post('http://localhost:3000/DB/menu', {
         ...dataWithoutId,
         precio: parseFloat(editData.precio),
@@ -111,6 +113,32 @@ export default function MenuPage() {
     setIsCreateOpen(false);
     setEditData({ codigo: '', nombre: '', descripcion: '', categoria: '', precio: '', disponible: true, ingredientes: '', esVegano: false });
   };
+  
+
+  const handleSort = async (order: 'asc' | 'desc') => {
+    try {
+      const url = `http://localhost:3000/DB/utils/${order === 'asc' ? 'sortAsc' : 'sortDesc'}/menu`;
+      const response = await axios.get(url);
+      setSortedMenus(response.data);
+    } catch (error) {
+      console.error('Error al ordenar:', error);
+    }
+  };
+  
+  const handleSortBy = async (campo: string, orden: 'asc' | 'desc') => {
+    try {
+      const response = await axios.get(`http://localhost:3000/DB/menu`, {
+        params: {
+          orden: JSON.stringify({ [campo]: orden === 'asc' ? 1 : -1 })
+        }
+      });
+      setSortedMenus(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  
+  
   
 
   const handleAddToBulk = () => {
@@ -181,6 +209,11 @@ export default function MenuPage() {
         <Button variant="outlined" onClick={() => setIsBulkOpen(true)}>Agregar varios</Button>
         <Button variant="outlined" onClick={() => setIsBulkUpdateOpen(true)}>Actualizar varios</Button>
         <Button variant="outlined" color="error" onClick={() => setIsBulkDeleteOpen(true)}>Eliminar varios</Button>
+        <Button onClick={() => handleSort('asc')}>Ordenar por Precio Ascendente</Button>
+<Button onClick={() => handleSort('desc')}>Ordenar por Precio Descendente</Button>
+<Button onClick={() => handleSortBy('precio', 'asc')}>Precio ↑</Button>
+<Button onClick={() => handleSortBy('precio', 'desc')}>Precio ↓</Button>
+
       </Box>
 
       {paginatedMenus.map((menu, i) => (
@@ -200,8 +233,8 @@ export default function MenuPage() {
           </Paper>
         </Fade>
       ))}
+<Pagination count={Math.ceil(currentMenus.length / MENUS_PER_PAGE)} page={page} onChange={handleChange} />
 
-      <Pagination count={Math.ceil(menus.length / MENUS_PER_PAGE)} page={page} onChange={handleChange} />
 
       {/* Dialogs */}
       <Dialog open={isCreateOpen} onClose={() => setIsCreateOpen(false)}>
