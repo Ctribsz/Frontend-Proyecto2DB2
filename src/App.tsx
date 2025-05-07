@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Sidebar from './components/Sidebar';
 import UsuariosPage from './pages/UsuariosPage';
-
+import MenuPage from './pages/MenuPage'; // Importa tu página de Menú
 
 const theme = createTheme({
   palette: {
@@ -21,6 +21,7 @@ function App() {
           <Box sx={{ flexGrow: 1, p: 3 }}>
             <Routes>
               <Route path="/usuarios" element={<UsuariosPage />} />
+              <Route path="/menu" element={<MenuPage />} /> {/* Agregamos la ruta del Menú */}
               {/* Puedes añadir más rutas aquí */}
             </Routes>
           </Box>

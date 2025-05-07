@@ -18,4 +18,16 @@ export interface Direccion {
     activo: boolean
     fechaRegistro: string
   }
+
+  export interface Menu {
+    _id: string;
+    nombre: string;
+    descripcion: string;
+    precio: number;
+    categoria: string;
+    disponible: boolean;
+    ingredientes: string[];
+    vegana: boolean;
+    fechaCreacion: string; // Puedes usar Date si prefieres manipularla como un objeto Date
+  }
   

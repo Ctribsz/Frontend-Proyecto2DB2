@@ -67,7 +67,7 @@ const menuItems = [
   { text: "Usuarios", icon: <PeopleIcon />, path: "/usuarios" },
   { text: "Órdenes", icon: <ShoppingCartIcon />, path: "/ordenes" },
   { text: "Reseñas", icon: <StarIcon />, path: "/resenas" },
-  { text: "Menú", icon: <RestaurantMenuIcon />, path: "/menu" },
+  { text: "Menú", icon: <RestaurantMenuIcon />, path: "/menu" }, // Aquí se agrega la ruta para el menú
   { text: "Sucursales", icon: <StorefrontIcon />, path: "/sucursales" },
 ];
 
